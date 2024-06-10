@@ -2,15 +2,15 @@
 name: Test phpBB Extension in Codespaces
 
 # TODO: refine this to certain actions
-#on: [push]
+on: [push]
 
-on:
-  workflow_dispatch:
-    inputs:
-      branch_name:
-        description: 'Name of the new branch'
-        required: true
-        default: 'codespaces/2024-10-06-test'
+#on:
+#  workflow_dispatch:
+#    inputs:
+#      branch_name:
+#        description: 'Name of the new branch'
+#        required: true
+#        default: 'codespaces/2024-10-06-test'
 
 jobs:
   build:
@@ -27,11 +27,11 @@ jobs:
       run: |
         mv workspace/phpbb/.devcontainer .devcontainer
         mv workspace/phpbb/.vscode .vscode
-    # Don't use codespaces/test-${{ env.NOW_DATE }} yet
+    # Don't use ${{ github.event.inputs.branch_name }} codespaces/test-${{ env.NOW_DATE }} yet
     - name: Save to a new branch
       run: |
         echo "NOW_DATE=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
         git add .
         git commit -m "Codespaces setup" --author="github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
-        git checkout -b ${{ github.event.inputs.branch_name }}
-        git push origin ${{ github.event.inputs.branch_name }}
+        git checkout -b codespaces/test-${{ env.NOW_DATE }}
+        git push origin codespaces/test-${{ env.NOW_DATE }}
