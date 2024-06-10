@@ -33,5 +33,5 @@ jobs:
         echo "NOW_DATE=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
         git add .
         git commit -m "Codespaces setup" --author="github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
-        git checkout -b codespaces/test-${{ env.NOW_DATE }}
-        git push origin codespaces/test-${{ env.NOW_DATE }}
+        git checkout -b codespaces/test-$(date +%Y%m%d%H%M)
+        git push origin codespaces/test-$(date +%Y%m%d%H%M)
