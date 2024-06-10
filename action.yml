@@ -2,8 +2,6 @@
 name: Test phpBB Extension in Codespaces
 
 # TODO: refine this to certain actions
-on: [push]
-
 #on:
 #  workflow_dispatch:
 #    inputs:
