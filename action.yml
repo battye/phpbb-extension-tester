@@ -21,13 +21,18 @@ runs:
     shell: bash
     run: |
       sudo mkdir -p /workspace/phpbb
-      sudo git clone -b 3.3.x --single-branch  https://github.com/phpbb/phpbb.git /workspace/phpbb
+      sudo git clone -b 3.3.x --single-branch https://github.com/phpbb/phpbb.git /workspace/phpbb
   - name: Move Codespaces files back to the current repository
     shell: bash
     run: |
       sudo mv /workspace/phpbb/.devcontainer .devcontainer
       sudo mv /workspace/phpbb/.vscode .vscode
   # Don't use ${{ github.event.inputs.branch_name }} codespaces/test-${{ env.NOW_DATE }} yet
+  - name: Copy a custom setup.sh file
+    shell: bash
+    run: |
+      rm -rf .devcontainer/resources/setup.sh
+      cat "${{ github.action_path }}/setup.sh" > .devcontainer/resources/setup.sh
   - name: Save to a new branch
     shell: bash
     run: |
