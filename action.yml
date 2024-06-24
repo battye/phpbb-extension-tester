@@ -1,7 +1,6 @@
 # Clone, create branch, move folders, commit changes
 # See see https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
 # TODO: 
-# 1. Specify phpbb branch? like 3.3.x
 # 2. Specify branch name to use?
 # 3. Output the link to the branch?
 #
@@ -14,6 +13,10 @@ inputs:
     description: 'phpBB branch to use'
     required: true
     default: '3.3.x'
+  destination-branch:
+    description: 'New branch to create in the extension project (timestamp will be appended)'
+    required: true
+    default: 'codespace-test'
 
 # TODO: refine this to certain actions
 #on:
@@ -67,11 +70,13 @@ runs:
   # Create a new branch for the user to create the Codespace on GitHub so it doesn't impact the main project
   - name: Save to a new branch
     shell: bash
+    env:
+      INPUT_DESTINATION_BRANCH: ${{ inputs.destination-branch }}
     run: |
-      echo "NOW_DATE=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
+      BRANCH_NAME="$INPUT_DESTINATION_BRANCH/$(date +%Y%m%d%H%M)"
       git config user.email "github-actions[bot]@users.noreply.github.com"
       git config user.name "github-actions[bot]"
-      git checkout -b test-$(date +%Y%m%d%H%M)/codespace
+      git checkout -b "$BRANCH_NAME"
       git add .
       git commit -m "Codespaces setup"
-      git push -u origin test-$(date +%Y%m%d%H%M)/codespace
+      git push -u origin "$BRANCH_NAME"
