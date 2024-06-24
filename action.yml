@@ -35,7 +35,7 @@ runs:
       EXT_NAME_STRIPPED=$(echo $EXT_NAME | awk -F '/' '{print $NF}' | tr -d '"')
       echo "EXTENSION_NAME=$(echo $EXT_NAME_STRIPPED)" >> $GITHUB_ENV
       sed -i "s/PHPBB_EXTENSION_NAME/$EXT_NAME_STRIPPED/g" "${{ github.action_path }}/setup.sh"
-      echo $(jq '.configurations.pathMappings.\"/var/www/html\"=\"${workspaceRoot}/\"' .vscode/launch.json) | sudo tee '.vscode/launch.json' > '/dev/null'
+      echo $(jq '.configurations.pathMappings."/var/www/html"="${workspaceRoot}/"' .vscode/launch.json) | sudo tee '.vscode/launch.json' > '/dev/null'
   # Don't use ${{ github.event.inputs.branch_name }} codespaces/test-${{ env.NOW_DATE }} yet "/var/www/html/ext/phpbb/titania":
   - name: Copy a custom setup.sh file
     shell: bash
