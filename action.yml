@@ -38,10 +38,8 @@ runs:
   - name: Adjust name in launch.json
     shell: bash
     run: |
-      echo "EXT_NAME=$(jq .name composer.json)"
-      echo $EXT_NAME
-      echo "EXT_NAME_STRIPPED=$(echo $EXT_NAME | awk -F '/' '{print $NF}')"
-      echo $EXT_NAME | awk -F '/' '{print $NF}'
+      EXT_NAME=$(jq .name composer.json)
+      EXT_NAME_STRIPPED=$(echo $EXT_NAME | awk -F '/' '{print $NF}')
       echo $EXT_NAME_STRIPPED
   - name: Save to a new branch
     shell: bash
