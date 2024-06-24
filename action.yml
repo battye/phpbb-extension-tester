@@ -20,7 +20,7 @@ runs:
   - name: Clone external phpBB repository
     shell: bash
     run: |
-      mkdir -p /workspace/phpbb
+      sudo mkdir -p /workspace/phpbb
       git clone -b 3.3.x --single-branch  https://github.com/phpbb/phpbb.git /workspace/phpbb
   - name: Move Codespaces files back to the current repository
     shell: bash
