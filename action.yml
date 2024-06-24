@@ -18,6 +18,11 @@ inputs:
     required: true
     default: 'codespace-test'
 
+outputs:
+  destination-branch:
+    description: 'The name of the created branch with the timestamp'
+    value: ${{ steps.save-branch.outputs.destination-branch }}
+
 # TODO: refine this to certain actions
 #on:
 #  workflow_dispatch:
@@ -69,6 +74,7 @@ runs:
       cat "${{ github.action_path }}/setup.sh" | sudo tee '.devcontainer/resources/setup.sh' > '/dev/null'
   # Create a new branch for the user to create the Codespace on GitHub so it doesn't impact the main project
   - name: Save to a new branch
+    id: save-branch
     shell: bash
     env:
       INPUT_DESTINATION_BRANCH: ${{ inputs.destination-branch }}
@@ -80,3 +86,4 @@ runs:
       git add .
       git commit -m "Codespaces setup"
       git push -u origin "$BRANCH_NAME"
+      echo "destination-branch=$(echo $BRANCH_NAME)" >> $GITHUB_OUTPUT
