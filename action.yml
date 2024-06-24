@@ -87,3 +87,4 @@ runs:
       git commit -m "Codespaces setup"
       git push -u origin "$BRANCH_NAME"
       echo "destination-branch=$(echo $BRANCH_NAME)" >> $GITHUB_OUTPUT
+      echo "### Your Codespace is ready to run on branch $BRANCH_NAME! :rocket:" >> $GITHUB_STEP_SUMMARY
