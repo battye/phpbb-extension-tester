@@ -32,7 +32,7 @@ runs:
     shell: bash
     run: |
       sudo rm -rf .devcontainer/resources/setup.sh
-      sudo cat "${{ github.action_path }}/setup.sh" > .devcontainer/resources/setup.sh
+      cat "${{ github.action_path }}/setup.sh" | sudo tee -a '.devcontainer/resources/setup.sh' > '/dev/null'
   - name: Save to a new branch
     shell: bash
     run: |
