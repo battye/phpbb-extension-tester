@@ -1,6 +1,11 @@
 # Clone, create branch, move folders, commit changes
 # See see https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
-# TODO: Specify phpbb branch?
+# TODO: 
+# 1. Specify phpbb branch? like 3.3.x
+# 2. Specify branch name to use?
+# 3. Output the link to the branch?
+#
+
 name: Test phpBB Extension in Codespaces
 
 # TODO: refine this to certain actions
@@ -17,17 +22,20 @@ runs:
   steps:
   - name: Checkout current repository
     uses: actions/checkout@v4
+  # Clone phpBB so we can use most of the same Codespace configuration as the main project
   - name: Clone external phpBB repository
     shell: bash
     run: |
       sudo mkdir -p /workspace/phpbb
       sudo git clone -b 3.3.x --single-branch https://github.com/phpbb/phpbb.git /workspace/phpbb
+  # Move the Codespaces configuration into the user project
   - name: Move Codespaces files back to the current repository
     shell: bash
     run: |
       sudo mv /workspace/phpbb/.devcontainer .devcontainer
       sudo mv /workspace/phpbb/.vscode .vscode
-  # Open composer.json from the user package, extract the name from the 'name' attribute
+  # Open composer.json from the user package, extract the name from the 'name' key and then use
+  # that to create the Codespace configuration and have the extension auto-install.
   - name: Adjust extension name in setup, launcher and installer
     shell: bash
     run: |
@@ -41,12 +49,13 @@ runs:
       sudo sed -i "s/\/phpBB\//\//g" .vscode/launch.json
 
       sudo sed -i "s/\[\]/\[${EXT_NAME//\//\\/}\]/g" .devcontainer/resources/phpbb-config.yml
-  # Don't use ${{ github.event.inputs.branch_name }} codespaces/test-${{ env.NOW_DATE }} yet "/var/www/html/ext/phpbb/titania":
+  # Use setup.sh from the GitHub Action because it is tailored for an extension
   - name: Copy a custom setup.sh file
     shell: bash
     run: |
       sudo rm -rf .devcontainer/resources/setup.sh
       cat "${{ github.action_path }}/setup.sh" | sudo tee '.devcontainer/resources/setup.sh' > '/dev/null'
+  # Create a new branch for the user to create the Codespace on GitHub so it doesn't impact the main project
   - name: Save to a new branch
     shell: bash
     run: |

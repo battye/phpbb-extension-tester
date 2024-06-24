@@ -1,4 +1,5 @@
 # setup.sh
+# Create a Codespace that can be used to test a phpBB Extension
 
 # Start MySQL
 sudo service mysql start
