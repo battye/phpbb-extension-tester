@@ -33,6 +33,13 @@ runs:
     run: |
       sudo rm -rf .devcontainer/resources/setup.sh
       cat "${{ github.action_path }}/setup.sh" | sudo tee -a '.devcontainer/resources/setup.sh' > '/dev/null'
+
+  # Open composer.json from the user package, extract the name from the 'name' attribute
+  - name: Adjust name in launch.json
+    shell: bash
+    run: |
+      echo "EXT_NAME=$(jq .name composer.json)"
+      echo $EXT_NAME
   - name: Save to a new branch
     shell: bash
     run: |
