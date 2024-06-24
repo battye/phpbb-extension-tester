@@ -32,6 +32,8 @@ runs:
   # Clone phpBB so we can use most of the same Codespace configuration as the main project
   - name: Clone external phpBB repository
     shell: bash
+    env:
+     INPUT_SOURCE_BRANCH: ${{ inputs.source-branch }}
     run: |
       sudo mkdir -p /workspace/phpbb
       sudo git clone -b "$INPUT_SOURCE_BRANCH" --single-branch https://github.com/phpbb/phpbb.git /workspace/phpbb
