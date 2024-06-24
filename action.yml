@@ -37,4 +37,4 @@ runs:
       git add .
       git commit -m "Codespaces setup"
       git checkout -b codespaces/test-$(date +%Y%m%d%H%M)
-      git push origin codespaces/test-$(date +%Y%m%d%H%M)
+      git push -u origin codespaces/test-$(date +%Y%m%d%H%M)
