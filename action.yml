@@ -40,7 +40,7 @@ runs:
     run: |
       echo "EXT_NAME=$(jq .name composer.json)"
       echo $EXT_NAME
-      EXT_NAME_STRIPPED="${EXT_NAME##*/}"
+      echo "EXT_NAME_STRIPPED=${EXT_NAME##*/}"
       echo "$EXT_NAME_STRIPPED"
   - name: Save to a new branch
     shell: bash
