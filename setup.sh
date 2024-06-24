@@ -34,8 +34,6 @@ sudo ln -s /workspaces/phpbb /var/www/html
 sudo mkdir /workspaces/phpbb/ext/phpbb
 sudo ln -s ./ /workspaces/phpbb/ext/phpbb/PHPBB_EXTENSION_NAME
 
-# Need to fix name above to be the name of the ext ^^
-
 echo "phpBB CLI install"
 cd /workspaces/phpbb && composer install --no-interaction
 sudo php /workspaces/phpbb/install/phpbbcli.php install /workspaces/phpbb/install/install-config.yml
