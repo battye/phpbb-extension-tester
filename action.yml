@@ -40,7 +40,7 @@ runs:
       sudo sed -i "s/\/var\/www\/html/\/var\/www\/html\/ext\/phpbb\/$EXT_NAME_STRIPPED/g" .vscode/launch.json
       sudo sed -i "s/\/phpBB\//\//g" .vscode/launch.json
 
-      sudo sed -i "s/\[\]/\['$EXT_NAME'\]/g" .devcontainer/resources/phpbb-config.yml
+      sudo sed -i "s/[]/['$EXT_NAME']/g" .devcontainer/resources/phpbb-config.yml
   # Don't use ${{ github.event.inputs.branch_name }} codespaces/test-${{ env.NOW_DATE }} yet "/var/www/html/ext/phpbb/titania":
   - name: Copy a custom setup.sh file
     shell: bash
