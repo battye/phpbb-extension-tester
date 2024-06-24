@@ -34,7 +34,7 @@ runs:
       echo "NOW_DATE=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
       git config user.email "github-actions[bot]@users.noreply.github.com"
       git config user.name "github-actions[bot]"
-      git checkout -b codespaces/test-$(date +%Y%m%d%H%M)
+      git checkout -b test-$(date +%Y%m%d%H%M)/codespace
       git add .
       git commit -m "Codespaces setup"
-      git push -u origin codespaces/test-$(date +%Y%m%d%H%M)
+      git push -u origin test-$(date +%Y%m%d%H%M)/codespace
