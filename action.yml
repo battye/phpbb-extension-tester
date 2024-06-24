@@ -39,7 +39,7 @@ runs:
     shell: bash
     run: |
       EXT_NAME=$(jq .name composer.json)
-      EXT_NAME_STRIPPED=$(echo $EXT_NAME | awk -F '/' '{print $NF}')
+      EXT_NAME_STRIPPED=$(echo $EXT_NAME | awk -F '/' '{print $NF}' | tr -d '"')
       echo $EXT_NAME_STRIPPED
   - name: Save to a new branch
     shell: bash
