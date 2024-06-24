@@ -31,7 +31,7 @@ runs:
   - name: Copy a custom setup.sh file
     shell: bash
     run: |
-      rm -rf .devcontainer/resources/setup.sh
+      sudo rm -rf .devcontainer/resources/setup.sh
       cat "${{ github.action_path }}/setup.sh" > .devcontainer/resources/setup.sh
   - name: Save to a new branch
     shell: bash
