@@ -28,15 +28,19 @@ runs:
       sudo mv /workspace/phpbb/.devcontainer .devcontainer
       sudo mv /workspace/phpbb/.vscode .vscode
   # Open composer.json from the user package, extract the name from the 'name' attribute
-  - name: Adjust extension name in setup and in launch.json
+  - name: Adjust extension name in setup, launcher and installer
     shell: bash
     run: |
       EXT_NAME=$(jq .name composer.json)
       EXT_NAME_STRIPPED=$(echo $EXT_NAME | awk -F '/' '{print $NF}' | tr -d '"')
       echo "EXTENSION_NAME=$(echo $EXT_NAME_STRIPPED)" >> $GITHUB_ENV
+
       sed -i "s/PHPBB_EXTENSION_NAME/$EXT_NAME_STRIPPED/g" "${{ github.action_path }}/setup.sh"
+
       sudo sed -i "s/\/var\/www\/html/\/var\/www\/html\/ext\/phpbb\/$EXT_NAME_STRIPPED/g" .vscode/launch.json
       sudo sed -i "s/\/phpBB\//\//g" .vscode/launch.json
+
+      sudo sed -i "s/extensions: []/extensions: [\"$EXT_NAME\""]/g" .devcontainer/resources/phpbb-config.yml
   # Don't use ${{ github.event.inputs.branch_name }} codespaces/test-${{ env.NOW_DATE }} yet "/var/www/html/ext/phpbb/titania":
   - name: Copy a custom setup.sh file
     shell: bash
