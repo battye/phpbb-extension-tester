@@ -1,7 +1,6 @@
 # Clone, create branch, move folders, commit changes
 # See see https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
 name: Test phpBB Extension in Codespaces
-shell: bash
 
 # TODO: refine this to certain actions
 #on:
@@ -18,16 +17,19 @@ runs:
   - name: Checkout current repository
     uses: actions/checkout@v4
   - name: Clone external phpBB repository
+    shell: bash
     run: |
       git clone https://github.com/phpbb/phpbb.git
       mkdir -p workspace/phpbb
       mv phpbb/* workspace/phpbb/
   - name: Move Codespaces files back to the current repository
+    shell: bash
     run: |
       mv workspace/phpbb/.devcontainer .devcontainer
       mv workspace/phpbb/.vscode .vscode
   # Don't use ${{ github.event.inputs.branch_name }} codespaces/test-${{ env.NOW_DATE }} yet
   - name: Save to a new branch
+    shell: bash
     run: |
       echo "NOW_DATE=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
       git add .
