@@ -34,7 +34,7 @@ runs:
     shell: bash
     run: |
       sudo mkdir -p /workspace/phpbb
-      sudo git clone -b $INPUT_SOURCE_BRANCH --single-branch https://github.com/phpbb/phpbb.git /workspace/phpbb
+      sudo git clone -b "$INPUT_SOURCE_BRANCH" --single-branch https://github.com/phpbb/phpbb.git /workspace/phpbb
   # Move the Codespaces configuration into the user project
   - name: Move Codespaces files back to the current repository
     shell: bash
