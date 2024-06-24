@@ -11,26 +11,25 @@ name: Test phpBB Extension in Codespaces
 #        required: true
 #        default: 'codespaces/2024-10-06-test'
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout current repository
-      uses: actions/checkout@v4
-    - name: Clone external phpBB repository
-      run: |
-        git clone https://github.com/phpbb/phpbb.git
-        mkdir -p workspace/phpbb
-        mv phpbb/* workspace/phpbb/
-    - name: Move Codespaces files back to the current repository
-      run: |
-        mv workspace/phpbb/.devcontainer .devcontainer
-        mv workspace/phpbb/.vscode .vscode
-    # Don't use ${{ github.event.inputs.branch_name }} codespaces/test-${{ env.NOW_DATE }} yet
-    - name: Save to a new branch
-      run: |
-        echo "NOW_DATE=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
-        git add .
-        git commit -m "Codespaces setup" --author="github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
-        git checkout -b codespaces/test-$(date +%Y%m%d%H%M)
-        git push origin codespaces/test-$(date +%Y%m%d%H%M)
+runs:
+  using: "composite"
+  steps:
+  - name: Checkout current repository
+    uses: actions/checkout@v4
+  - name: Clone external phpBB repository
+    run: |
+      git clone https://github.com/phpbb/phpbb.git
+      mkdir -p workspace/phpbb
+      mv phpbb/* workspace/phpbb/
+  - name: Move Codespaces files back to the current repository
+    run: |
+      mv workspace/phpbb/.devcontainer .devcontainer
+      mv workspace/phpbb/.vscode .vscode
+  # Don't use ${{ github.event.inputs.branch_name }} codespaces/test-${{ env.NOW_DATE }} yet
+  - name: Save to a new branch
+    run: |
+      echo "NOW_DATE=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
+      git add .
+      git commit -m "Codespaces setup" --author="github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+      git checkout -b codespaces/test-$(date +%Y%m%d%H%M)
+      git push origin codespaces/test-$(date +%Y%m%d%H%M)
