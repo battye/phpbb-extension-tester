@@ -27,20 +27,20 @@ runs:
     run: |
       sudo mv /workspace/phpbb/.devcontainer .devcontainer
       sudo mv /workspace/phpbb/.vscode .vscode
-  # Don't use ${{ github.event.inputs.branch_name }} codespaces/test-${{ env.NOW_DATE }} yet
-  - name: Copy a custom setup.sh file
-    shell: bash
-    run: |
-      sudo rm -rf .devcontainer/resources/setup.sh
-      cat "${{ github.action_path }}/setup.sh" | sudo tee -a '.devcontainer/resources/setup.sh' > '/dev/null'
-
   # Open composer.json from the user package, extract the name from the 'name' attribute
   - name: Adjust name in launch.json
     shell: bash
     run: |
       EXT_NAME=$(jq .name composer.json)
       EXT_NAME_STRIPPED=$(echo $EXT_NAME | awk -F '/' '{print $NF}' | tr -d '"')
-      echo $EXT_NAME_STRIPPED
+      echo "EXTENSION_NAME=$(echo $EXT_NAME_STRIPPED)" >> $GITHUB_ENV
+      sed -i "s/PHPBB_EXTENSION_NAME/$EXT_NAME_STRIPPED/g" "${{ github.action_path }}/setup.sh"
+  # Don't use ${{ github.event.inputs.branch_name }} codespaces/test-${{ env.NOW_DATE }} yet
+  - name: Copy a custom setup.sh file
+    shell: bash
+    run: |
+      sudo rm -rf .devcontainer/resources/setup.sh
+      cat "${{ github.action_path }}/setup.sh" | sudo tee -a '.devcontainer/resources/setup.sh' > '/dev/null'
   - name: Save to a new branch
     shell: bash
     run: |

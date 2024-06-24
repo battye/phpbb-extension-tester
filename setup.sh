@@ -32,7 +32,7 @@ echo "Symlink extension"
 sudo rm -rf /var/www/html
 sudo ln -s /workspaces/phpbb /var/www/html
 sudo mkdir /workspaces/phpbb/ext/phpbb
-sudo ln -s ./ /workspaces/phpbb/ext/phpbb/titania
+sudo ln -s ./ /workspaces/phpbb/ext/phpbb/PHPBB_EXTENSION_NAME
 
 # Need to fix name above to be the name of the ext ^^
 
